@@ -1,6 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //define anonymous function
 (function() {
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function __Update_CSSFile__()
 {
@@ -73,33 +74,29 @@ function __OnChange_Elements__(e)
 function __OnMouseOver_Element__(e)
 {
 	var id_prefix = e.target.id.substr(0, 26);
+	var className = e.target.className;
+	//var filterClass = className.indexOf('ps_box-scrollarea-row') || className.indexOf(')
 	if(e.ctrlKey && e.altKey && id_prefix != "PEOPLETOOLS_NUI_ASSISTANT_")
+	//if(e.ctrlKey && e.altKey && id_prefix != "PEOPLETOOLS_NUI_ASSISTANT_" || className.indexOf('ps_') !== -1 || className.indexOf('psc_') !== -1)	
 	{
-		//console.log(e.target.tagName + "_anonymous_" + (new Date()).getTime());
 		if(!$(e.target).attr("id") || $(e.target).attr("id") == "undefined" || $(e.target).attr("id") == "")
 		{
 			$(e.target).attr("id", e.target.tagName + "_" + (new Date()).getTime());
 		}
-		//console.log(e.target.tagName + "<MouseEnter>: " + e.target.id + ": " + e.target.className);
-		//console.log(e.target.tagName + "<MouseEnter>: " + e.target.id + ": " + e.target.className);
-		//console.log(e.target.tagName + "<MouseEnter>: " + $(e.target).offset().left + ", " + $(e.target).offset().top + ", " + e.target.offsetWidth + ", " + e.target.offsetHeight);
-		if(!$(e.target).attr("original-style") || $(e.target).attr("original-style") == "undefined" || $(e.target).attr("original-style") == "" || $(e.target).attr("original-style") != "SAVED")
+
+		/*if(!$(e.target).attr("original-style") || $(e.target).attr("original-style") == "undefined" || $(e.target).attr("original-style") == "" || $(e.target).attr("original-style") != "SAVED")
 		{
-			/*console.log("OLD: " +　e.target.id + ":" + $(e.target).css("border-color"));
-			console.log("OLD: " +　e.target.id + ":" + $(e.target).css("border-width"));
-			console.log("OLD: " +　e.target.id + ":" + $(e.target).css("border-style"));
-			console.log("OLD: " +　e.target.id + ":" + $(e.target).css("padding"));*/
-		
-			$(e.target).attr("original-border-color", $(e.target).css("border-color"));
-			$(e.target).attr("original-border-width", $(e.target).css("border-width"));
-			$(e.target).attr("original-border-style", $(e.target).css("border-style"));
-			$(e.target).attr("original-padding", $(e.target).css("padding"));
+
+			//$(e.target).attr("original-border-color", $(e.target).css("border-color"));
+			//$(e.target).attr("original-border-width", $(e.target).css("border-width"));
+			//$(e.target).attr("original-border-style", $(e.target).css("border-style"));
+			//$(e.target).attr("original-padding", $(e.target).css("padding"));
 			
 			$(e.target).attr("original-style", "SAVED");
 		}
-		
-		$(e.target).css({"border-color": "#C1E0FF", "border-width": "1px", "border-style": "dashed"});
-		$(e.target).css({"padding": "10px 10px 10px 10px"});
+		*/
+		//$(e.target).css({"border-color": "#C1E0FF", "border-width": "1px", "border-style": "dashed"});
+		//$(e.target).css({"padding": "10px 10px 10px 10px"});
 		
 		var strOwner =  e.target.id;
 		strOwner = strOwner.replace(/:/g,"\\:");  
@@ -125,12 +122,12 @@ function __OnMouseOut_Element__(e) {
 	console.log($("#" + strOwner).attr("original-border-style"));
 	console.log($("#" + strOwner).attr("original-padding"));*/
 	
-	$("#" + strOwner).css({
+	/*$("#" + strOwner).css({
 		"border-color": $("#" + strOwner).attr("original-border-color"),
 		"border-width": $("#" + strOwner).attr("original-border-width"),
 		"border-style": $("#" + strOwner).attr("original-border-style"),
 		"padding": $("#" + strOwner).attr("original-padding")
-	});
+	});*/
 	
 	
 	$("#" + strOwner).attr("original-style", "");			
@@ -155,7 +152,7 @@ function __OnDblclick_Element__(e) {
 		strEscapeID = strEscapeID.replace(/:/g,"\\:");  
 		strEscapeID = strEscapeID.replace(/\./g,"\\.");  
 		strEscapeID = strEscapeID.replace(/\//g,"\\/");  
-		strEscapeID = strEscapeID.replace(/\$/g,"\\$");  
+		strEscapeID = strEscapeID.replace(/\$/g,"\\$");  	
 		strEscapeID = strEscapeID.replace(/\[/g,"\\[");  
 		strEscapeID = strEscapeID.replace(/\]/g,"\\]");
 		
@@ -186,13 +183,53 @@ function __OnDblclick_Element__(e) {
 	});
 }
 
-var allobjs = $("*");
+var allobjs = $("div");
 for(var i = 0; i < allobjs.length; i++)
 {
 	allobjs[i].addEventListener("mouseover", __OnMouseOver_Element__);
 }
+$('<div id="selector"><div id="selector-top"></div><div id="selector-left"></div><div id="selector-right"></div><div id="selector-bottom"></div></div>').appendTo("body");
+var elements = {
+    top: $('#selector-top'),
+    left: $('#selector-left'),
+    right: $('#selector-right'),
+    bottom: $('#selector-bottom')
+};
 
-var maskNode = document.createElement('div');
+$(document).mousemove(function(event) {
+    if(event.target.id.indexOf('selector') !== -1 || event.target.tagName === 'BODY' || event.target.tagName === 'HTML') return;
+    
+    var $target = $(event.target);
+        targetOffset = $target[0].getBoundingClientRect(),
+        targetHeight = targetOffset.height,
+        targetWidth  = targetOffset.width;
+    //console.log(targetOffset);
+    
+    elements.top.css({
+        left:  (targetOffset.left - 4),
+        top:   (targetOffset.top - 4),
+        width: (targetWidth + 5)
+    });
+    elements.bottom.css({
+        top:   (targetOffset.top + targetHeight + 1),
+        left:  (targetOffset.left  - 3),
+        width: (targetWidth + 4)
+    });
+    elements.left.css({
+        left:   (targetOffset.left  - 5),
+        top:    (targetOffset.top  - 4),
+        height: (targetHeight + 8)
+    });
+    elements.right.css({
+        left:   (targetOffset.left + targetWidth + 1),
+        top:    (targetOffset.top  - 4),
+        height: (targetHeight + 8)
+    });
+    
+});
+
+
+/*var maskNode = document.createElement('div');
 maskNode.id = 'PEOPLETOOLS_NUI_ASSISTANT_HTML_ELEMENT_MASK_OWNERID_HTML_ELEMENT_MASK';
 maskNode.style = "width:100%; height:100%; background-color:#000099; filter:alpha(opacity=50); -moz-opacity:0.5; opacity:0.5;  position:absolute; left:0px; top:0px; display:none; z-index:99;";
 maskNode.addEventListener("mouseout", __OnMouseOut_Element__);
@@ -285,7 +322,7 @@ if(typeof match != "undefined" && null != match)
 
 }
 
-chrome.runtime.sendMessage(msg);
+chrome.runtime.sendMessage(msg);*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //call anonymous function

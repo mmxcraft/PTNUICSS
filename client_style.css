@@ -38,3 +38,19 @@
 	opacity: 0.8;
 	z-index: 9998;
 } 
+
+#selector-top, #selector-bottom {
+	z-index: 9999;
+	background: blue;
+	height:3px;
+	position: fixed;
+	transition:all 300ms ease;
+}
+#selector-left, #selector-right {
+	z-index: 9999;
+	background: blue;
+	width:3px;
+	position: fixed;
+	transition:all 300ms ease;
+}
+
