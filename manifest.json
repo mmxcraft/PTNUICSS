@@ -17,5 +17,8 @@
 		"js":["jquery-2.0.0.min.js", "jquery-ui.min.js", "content_script.js"],
 		"css":["jquery-ui.css", "client_style.css"],
 		"all_frames": true
-	}]
+	}],
+  "web_accessible_resources": [
+	"images/*.png"
+  ]
 }
