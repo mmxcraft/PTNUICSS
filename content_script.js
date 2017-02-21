@@ -204,21 +204,107 @@ function escapeID(id) {
 function showCssDialog(e)
 {
 	var listHtml = '<select id="MofengCSS_Category" name="MofengCSS_Category">';
-	listHtml 	+= '<option value="None">------</option><option value="Color">Color</option><option value="Text">Text</option><option value="Font1to2em">Font1to2em</option>';
-	listHtml 	+= '<option value="Font25to95em">Font25to95em</option>';
+	listHtml 	+= '<option value="None">------</option><option value="Color">Color</option><option value="Text">Text</option>';
+	listHtml 	+= '<option value="Border">Border</option><option value="Radius">Radius</option><option value="Control">Control</option><option value="Display">Display</option>'
+	listHtml 	+= '<option value="Image">Image</option><option value="Header">Header</option><option value="Label">Label</option><option value="Sizing">Sizing</option>'
+	listHtml 	+= '<option value="Padding">Padding</option><option value="Margin">Margin</option><option value="Position">Position</option><option value="Align">Align</option><option value="Scroll">Scroll</option>'
+	listHtml 	+= '<option value="Font25to95em">Font25to95em</option><option value="Font1to2em">Font1to2em</option>';
+	
 	listHtml 	+= '</select>';
 	listHtml 	+= '<div id = "selectable_list">';
+	
 	listHtml 	+= '<ol id="selectable_Color" class="MofengCSS_Category Color">'; 
 	listHtml    += '<li>psc_primary</li><li>psc_transparent</li><li>psc_selected</li><li>psc_grid-rowgradient</li><li>psc_grid-rowgradientodd</li><li>psc_grid-rowgradienteven</li><li>psc_grid-highlightrow</li>';
 	listHtml    += '</ol>';
+	
+	listHtml 	+= '<ol id="selectable_Border" class="MofengCSS_Category Border">'; 
+	listHtml 	+= '<li>psc_border-none</li><li>psc_border-standard</li><li>psc_border-transparent</li><li>psc_border-thicker</li><li>psc_border-toponly</li><li>psc_border-bottomonly</li><li>psc_border-leftonly</li>'
+	listHtml 	+= '<li>psc_border-rightonly</li><li>psc_grid-rowborderbottom</li><li>psc_grid-border</li><li>psc_grid-cellborders</li>'
+	listHtml    += '</ol>';
+	
+	listHtml 	+= '<ol id="selectable_Radius" class="MofengCSS_Category Radius">'; 
+	listHtml 	+= '<li>psc_radius-none</li><li>psc_radius-1px</li><li>psc_radius-10px</li><li>psc_radius-top1px</li><li>psc_radius-top2px</li><li>psc_radius-01em</li><li>psc_radius-1em</li>'
+	listHtml 	+= '<li>psc_radius-2em</li><li>psc_radius-top01em</li><li>psc_radius-top1em</li><li>psc_radius-top2em</li>'
+	listHtml    += '</ol>';
+	
+	listHtml 	+= '<ol id="selectable_Control" class="MofengCSS_Category Control">'; 
+	listHtml 	+= '<li>psc_control-heightauto</li><li>psc_control-fullwidth</li><li>psc_displayonlyastext_adjust</li><li>psc_control-width1pct</li><li>psc_control-width100pct</li><li>psc_control-width1px</li>'
+	listHtml 	+= '<li>psc_control-width100px</li><li>psc_control-width1em</li><li>psc_control-width100em</li><li>psc_control-height1pct</li><li>psc_control-height100pct</li>'
+	listHtml 	+= '<li>psc_control-height1px</li><li>psc_control-height100px</li><li>psc_control-height1em</li><li>psc_control-height100em</li>'
+	listHtml    += '</ol>';
+	
+	listHtml 	+= '<ol id="selectable_Display" class="MofengCSS_Category Display">'; 
+	listHtml 	+= '<li>psc_shadow-standard</li><li>ps_apps_pageheader</li><li>ps_proc_pageheader</li><li>psc_data-image</li><li>psc_data-primary</li><li>psc_data-secondary</li><li>psc_body_background</li>'
+	listHtml 	+= '<li>ps_hidden</li><li>psc_hidden</li><li>psc_force-hidden</li><li>psc_invisible</li><li>ps_inline</li><li>psc_inline</li><li>psc_display-inline</li><li>psc_display-inlineblock</li>'
+	listHtml 	+= '<li>psc_display-block</li><li>psc_badge-image</li><li>psc_badge-text</li><li>psc_link-normaltext</li><li>psc_disabled-normaltext</li><li>psc_size-medium</li><li>psc_size-large</li>'
+	listHtml 	+= '<li>psc_size-xsmall</li><li>psc_notext</li><li>psc_text-example</li>'
+	listHtml    += '</ol>';
+	
+	listHtml 	+= '<ol id="selectable_Image" class="MofengCSS_Category Image">'; 
+	listHtml 	+= '<li>psc_image-widthauto</li><li>psc_image-width1em</li><li>psc_image-width15em</li><li>psc_image-heightauto</li><li>psc_image-height1em</li><li>psc_image-height15em</li><li>psc_image-maxwidthauto</li>'
+	listHtml 	+= '<li>psc_image-maxwidth1em</li><li>psc_image-maxwidth15em</li><li>psc_image-maxheightauto</li><li>psc_image-maxheight1em</li><li>psc_image-maxheight15em</li>'
+	listHtml    += '</ol>';
+	
+	listHtml 	+= '<ol id="selectable_Header" class="MofengCSS_Category Header">'; 
+	listHtml 	+= '<li>psc_margin-headernone</li><li>psc_header-innerfloat</li><li>psc_header-outerfloat</li><li>psc_header-outerfloatul</li><li>psc_header-nospacing</li><li>psc_header-none</li>'
+	listHtml    += '</ol>';
+	
+	listHtml 	+= '<ol id="selectable_Label" class="MofengCSS_Category Label">'; 
+	listHtml 	+= '<li>psc_simple_label</li><li>psc_nolabel</li><li>psc_label-none</li><li>psc_label-invisible</li><li>psc_label-opacity0</li><li>psc_label-opacity1</li><li>psc_label-top</li><li>psc_label-valigntop</li>'
+	listHtml 	+= '<li>psc_label-valignbottom</li><li>psc_label-valignbaseline</li><li>psc_label-valignmiddle</li><li>psc_label-halignleft</li><li>psc_label-halignright</li><li>psc_label-haligncenter</li>'
+	listHtml 	+= '<li>psc_label-width1pct</li><li>psc_label-width100pct</li><li>psc_label-width1px</li><li>psc_label-width100px</li><li>psc_label-width1em</li><li>psc_label-width100em</li>'
+	listHtml 	+= '<li>psc_label-widthauto</li><li>psc_grid-norowlabels</li>'
+	listHtml    += '</ol>';
+	
+	listHtml 	+= '<ol id="selectable_Sizing" class="MofengCSS_Category Sizing">'; 
+	listHtml 	+= '<li>psc_width-auto</li><li>psc_width-1pct</li><li>psc_width-100pct</li><li>psc_width-1em</li><li>psc_width-100em</li><li>psc_width-1px</li><li>psc_width-100px</li><li>psc_maxwidth-40em</li>'
+	listHtml 	+= '<li>psc_maxwidth-60em</li><li>psc_maxwidth-100pct</li><li>psc_minwidth-20em</li><li>psc_minwidth-0pct</li><li>psc_minwidth-100pct</li><li>psc_minwidth-none</li><li>psc_auto_size</li>'
+	listHtml 	+= '<li>psc_block</li><li>psc_fullsize_button</li>'
+	listHtml    += '</ol>';
+	
+	
+	listHtml 	+= '<ol id="selectable_Padding" class="MofengCSS_Category Padding">'; 
+	listHtml 	+= '<li>psc_padding-none</li><li>psc_padding-bottomnone</li><li>psc_padding-topnone</li><li>psc_padding-leftnone</li><li>psc_padding-rightnone</li><li>psc_force-paddingnone</li>'
+	listHtml 	+= '<li>psc_force-nopadding</li><li>psc_padding-05x1em</li><li>psc_padding-075x1em</li><li>psc_padding-1px</li><li>psc_padding-100px</li><li>psc_padding-0_5pct</li>'
+	listHtml 	+= '<li>psc_padding-1pct</li><li>psc_padding-50pct</li><li>psc_padding-0_1em</li><li>psc_padding-30em</li><li>psc_padding-50em</li><li>psc_padding-top1px</li>'
+	listHtml 	+= '<li>psc_padding-bottom1px</li><li>psc_padding-left1px</li><li>psc_padding-right1px</li><li>psc_padding-sides1px</li>'
+	listHtml    += '</ol>';
+
+
+	listHtml 	+= '<ol id="selectable_Margin" class="MofengCSS_Category Margin">'; 
+	listHtml 	+= '<li>psc_margin-none</li><li>psc_margin-bottomnone</li><li>psc_margin-topnone</li><li>psc_margin-leftnone</li><li>psc_margin-rightnone</li><li>psc_force-marginnone</li>'
+	listHtml 	+= '<li>psc_force-nomargin</li><li>psc_margin-standard</li><li>psc_margin-auto</li><li>psc_margin-center</li><li>psc_margin-1px</li><li>psc_margin-100px</li>'
+	listHtml 	+= '<li>psc_margin-0_5pct</li><li>psc_margin-1pct</li><li>psc_margin-50pct</li><li>psc_margin-01em</li><li>psc_margin-30em</li><li>psc_margin-50em</li><li>psc_margin-top1px</li>'
+	listHtml 	+= '<li>psc_margin-bottom1px</li><li>psc_margin-left1px</li><li>psc_margin-right1px</li><li>psc_margin-sides1px</li>'
+	listHtml    += '</ol>';
+	
+	listHtml 	+= '<ol id="selectable_Position" class="MofengCSS_Category Position">'; 
+	listHtml 	+= '<li>psc_float-left</li><li>psc_float-right</li><li>psc_float-none</li><li>psc_force-floatnone</li><li>psc_float-clear</li><li>psc_force-floatclear</li><li>psc_float-clearleft</li>'
+	listHtml 	+= '<li>psc_float-clearright</li><li>psc_float-clearoverflow</li><li>psc_pos-absolute</li><li>psc_pos-relative</li><li>psc_pos-static</li><li>psc_pos-fixed</li>'
+	listHtml    += '</ol>';
+	
+
+	listHtml 	+= '<ol id="selectable_Align" class="MofengCSS_Category Align">'; 
+	listHtml 	+= '<li>psc_halign-right</li><li>psc_halign-left</li><li>psc_halign-center</li><li>psc_valign-top</li><li>psc_valign-bottom</li><li>psc_valign-middle</li><li>psc_valign-baseline</li>'
+	listHtml 	+= '<li>psc_lineheight-full</li><li>psc_lineheight-100pct</li>'
+	listHtml    += '</ol>';
+
+
+	listHtml 	+= '<ol id="selectable_Scroll" class="MofengCSS_Category Scroll">'; 
+	listHtml 	+= '<li>psc_noscroll</li><li>psc_scroll</li><li>ps_scrollable_h</li><li>ps_scrollable_v</li><li>ps_scrollable_both</li><li>psc_overflow-hidden</li><li>psc_overflow-auto</li>'
+	listHtml 	+= '<li>psc_overflow-xhidden</li><li>psc_overflow-yhidden</li><li>psc_overflow-xauto</li><li>psc_overflow-yauto</li>'
+	listHtml    += '</ol>';
+
 	listHtml 	+= '<ol id="selectable_Font1to2em" class="MofengCSS_Category Font1to2em">'; 
 	listHtml 	+= '<li>psc_font-size1em</li><li>psc_font-size11em</li><li>psc_font-size12em</li><li>psc_font-size13em</li><li>psc_font-size14em</li><li>psc_font-size15em</li>';
 	listHtml 	+= '<li>psc_font-size16em</li><li>psc_font-size17em</li><li>psc_font-size18em</li><li>psc_font-size19em</li><li>psc_font-size2em</li>';
 	listHtml 	+= '</ol>';
+	
 	listHtml 	+= '<ol id="selectable_Font25to95em" class="MofengCSS_Category Font25to95em">'; 
 	listHtml 	+= '<li>psc_font-size025em</li><li>psc_font-size033em</li><li>psc_font-size05em</li><li>psc_font-size06em</li><li>psc_font-size07em</li><li>psc_font-size075em</li>';
 	listHtml 	+= '<li>psc_font-size08em</li><li>psc_font-size085em</li><li>psc_font-size09em</li><li>psc_font-size095em</li>';
 	listHtml 	+= '</ol>';
+	
 	listHtml    += '<ol id="selectable_Text" class="MofengCSS_Category Text">';
 	listHtml    += '<li>psc_title-page</li><li>psc_title-sub</li><li>psc_title-h1</li><li>psc_title-h2</li><li>psc_title-h3</li><li>psc_title-h4</li><li>psc_title-h5</li><li>psc_title-h6</li><li>psc_link-textsize</li>';
 	listHtml    += '<li>psc_link-normaltext</li><li>psc_text-example</li><li>psc_strong</li><li>psc_wrap</li><li>psc_nowrap</li><li>psc_text_center</li>'
