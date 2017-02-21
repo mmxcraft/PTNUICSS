@@ -179,7 +179,10 @@ function showCssDialog(e)
 			
 			 "Apply CSS":function() {
 				applyCss();  
-			 }
+			 },
+			 "Restore CSS": function() {
+				restoreCss();
+			},
 			}
 	});
 
@@ -223,6 +226,13 @@ function applyCss()
 {
 	var selectedId = $("#MofengSelectId").val();
 	$(selectedId).attr("class", $("#newCss").val());
+}
+
+function restoreCss()
+{
+	var selectedId = $("#MofengSelectId").val();
+	$(selectedId).attr("class", $("#orgCss").val());
+	$("#newCss").val($("#orgCss").val());
 }
 
 $('<div id="selector"><div id="selector-top"></div><div id="selector-left"></div><div id="selector-right"></div><div id="selector-bottom"></div></div>').appendTo("body");
