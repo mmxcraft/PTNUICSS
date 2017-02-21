@@ -183,12 +183,130 @@ function __OnDblclick_Element__(e) {
 	});
 }
 
-var allobjs = $("div");
+/*var allobjs = $("div");
 for(var i = 0; i < allobjs.length; i++)
 {
 	allobjs[i].addEventListener("mouseover", __OnMouseOver_Element__);
 }
+*/
+
+function escapeID(id) {
+		var str = id;
+		str = str.replace(/:/g,"\\:");  
+		str = str.replace(/\./g,"\\.");  
+		str = str.replace(/\//g,"\\/");  
+		str = str.replace(/\$/g,"\\$");  
+		str = str.replace(/\[/g,"\\[");  
+		str = str.replace(/\]/g,"\\]");
+		return str;
+}
+
+function showCssDialog(e)
+{
+	var listHtml = '<select id="MofengCSS_Category" name="MofengCSS_Category">';
+	listHtml 	+= '<option value="None">------</option><option value="Color">Color</option><option value="Text">Text</option><option value="Font1to2em">Font1to2em</option>';
+	listHtml 	+= '<option value="Font25to95em">Font25to95em</option>';
+	listHtml 	+= '</select>';
+	listHtml 	+= '<div id = "selectable_list">';
+	listHtml 	+= '<ol id="selectable_Color" class="MofengCSS_Category Color">'; 
+	listHtml    += '<li>psc_primary</li><li>psc_transparent</li><li>psc_selected</li><li>psc_grid-rowgradient</li><li>psc_grid-rowgradientodd</li><li>psc_grid-rowgradienteven</li><li>psc_grid-highlightrow</li>';
+	listHtml    += '</ol>';
+	listHtml 	+= '<ol id="selectable_Font1to2em" class="MofengCSS_Category Font1to2em">'; 
+	listHtml 	+= '<li>psc_font-size1em</li><li>psc_font-size11em</li><li>psc_font-size12em</li><li>psc_font-size13em</li><li>psc_font-size14em</li><li>psc_font-size15em</li>';
+	listHtml 	+= '<li>psc_font-size16em</li><li>psc_font-size17em</li><li>psc_font-size18em</li><li>psc_font-size19em</li><li>psc_font-size2em</li>';
+	listHtml 	+= '</ol>';
+	listHtml 	+= '<ol id="selectable_Font25to95em" class="MofengCSS_Category Font25to95em">'; 
+	listHtml 	+= '<li>psc_font-size025em</li><li>psc_font-size033em</li><li>psc_font-size05em</li><li>psc_font-size06em</li><li>psc_font-size07em</li><li>psc_font-size075em</li>';
+	listHtml 	+= '<li>psc_font-size08em</li><li>psc_font-size085em</li><li>psc_font-size09em</li><li>psc_font-size095em</li>';
+	listHtml 	+= '</ol>';
+	listHtml    += '<ol id="selectable_Text" class="MofengCSS_Category Text">';
+	listHtml    += '<li>psc_title-page</li><li>psc_title-sub</li><li>psc_title-h1</li><li>psc_title-h2</li><li>psc_title-h3</li><li>psc_title-h4</li><li>psc_title-h5</li><li>psc_title-h6</li><li>psc_link-textsize</li>';
+	listHtml    += '<li>psc_link-normaltext</li><li>psc_text-example</li><li>psc_strong</li><li>psc_wrap</li><li>psc_nowrap</li><li>psc_text_center</li>'
+	listHtml	+= '</ol></div>';
+	listHtml    += '<label for="orgCss">Org CSS </label><textarea name="Org CSS" id="orgCss" cols="50" rows="2"></textarea><BR></BR>';
+	listHtml    += '<label for="newCss">New CSS</label><textarea name="New CSS" id="newCss" cols="50" rows="4" ></textarea><BR></BR>';
+	
+	var strOwner =  e.currentTarget.id;
+		strOwner = strOwner.replace(/:/g,"\\:");  
+		strOwner = strOwner.replace(/\./g,"\\.");  
+		strOwner = strOwner.replace(/\//g,"\\/");  
+		strOwner = strOwner.replace(/\$/g,"\\$");  
+		strOwner = strOwner.replace(/\[/g,"\\[");  
+		strOwner = strOwner.replace(/\]/g,"\\]");
+	
+	$("#MofengSelectId").val("#"+strOwner);
+	
+	$("#PTNUICSSdialog").html(listHtml).dialog({
+	title:"CSS Picker",
+	width:600,
+	modal: true,
+	open: function(event, ui){
+			$(".MofengCSS_Category").hide();
+			var selectedId = $("#MofengSelectId").val();
+			var orgCss=$(selectedId).attr('class');
+			$("#orgCss").val(orgCss);
+			$("#newCss").val(orgCss);
+
+			$("#MofengCSS_Category").change(function(e){
+					listSeleCategory(e);
+			});
+	},
+	buttons: {
+			  "Add CSS": function() {
+				addCss();
+			 },
+			
+			 "Apply CSS":function() {
+				applyCss();  
+			 }
+			}
+	});
+
+}
+
+function listSeleCategory(e)
+{
+	$(".MofengCSS_Category").hide();	
+	var cateSel = $("#MofengCSS_Category").val();
+	cateSel="#selectable_"+cateSel;
+	$(cateSel).show();
+	
+	$('.MofengCSS_Category').selectable();
+}
+
+function addCss()
+{
+	var cateSel = $("#MofengCSS_Category").val();
+	cateSel="#selectable_"+cateSel;
+	cateSel= cateSel + "> li.ui-selected"
+	var userSeleCss = new Array();
+	for(i = 0; i < $(cateSel).length; i++) {
+		userSeleCss[i] = $(cateSel)[i].innerText;
+	}
+	var selectedCss = $("#newCss").val();
+	if(selectedCss == "") {
+		$("#newCss").val(userSeleCss);
+	} else {
+		for(i = 0; i < userSeleCss.length; i++) {
+			if(selectedCss.indexOf(userSeleCss[i]) == -1) {
+				selectedCss = selectedCss + " " + userSeleCss[i];
+			}
+		}
+		$("#newCss").val(selectedCss);
+	}
+
+}
+
+function applyCss()
+{
+	var selectedId = $("#MofengSelectId").val();
+	$(selectedId).attr("class", $("#newCss").val());
+}
+
 $('<div id="selector"><div id="selector-top"></div><div id="selector-left"></div><div id="selector-right"></div><div id="selector-bottom"></div></div>').appendTo("body");
+$('<div id="PTNUICSSdialog"></div>').appendTo("body");
+$('<div id="MofengSelectId"></div>').appendTo("body");
+
 var elements = {
     top: $('#selector-top'),
     left: $('#selector-left'),
@@ -198,12 +316,19 @@ var elements = {
 
 $(document).mousemove(function(event) {
     if(event.target.id.indexOf('selector') !== -1 || event.target.tagName === 'BODY' || event.target.tagName === 'HTML') return;
+	
+	var id = escapeID(event.target.id);
+	
+	var idTagName = $("#" + id).prop("tagName");
+
+    //console.log("id=%s, idTagname=%s, tagname=%s",id, idTagName, event.target.tagName);
+	
+	//if(idTagName != 'DIV') return;
     
     var $target = $(event.target);
         targetOffset = $target[0].getBoundingClientRect(),
         targetHeight = targetOffset.height,
         targetWidth  = targetOffset.width;
-    //console.log(targetOffset);
     
     elements.top.css({
         left:  (targetOffset.left - 4),
@@ -227,6 +352,24 @@ $(document).mousemove(function(event) {
     });
     
 });
+
+$("div").mousedown(function(event){
+	if(2 != event.which) {
+		return;
+	}
+	var id = escapeID(event.currentTarget.id);
+	var idTagName = $("#" + id).prop("tagName");
+	console.log("id=%s, idTagname=%s, tagname=%s",id, idTagName, event.currentTarget.tagName);
+
+	var curDivId = $("#" + id).prop("id");
+	var parentDivId = $("#" + id).parent().prop("id");
+
+	if(event.currentTarget.tagName == "DIV" && curDivId.indexOf(parentDivId) == -1) {
+		showCssDialog(event);
+		event.stopPropagation();
+	}
+});
+
 
 
 /*var maskNode = document.createElement('div');
