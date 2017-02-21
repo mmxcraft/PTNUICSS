@@ -54,3 +54,7 @@
 	transition:all 300ms ease;
 }
 
+.MofengCSS_Category .ui-selecting { background: #FECA40; }
+.MofengCSS_Category .ui-selected { background: #F39814; color: white; }
+.MofengCSS_Category  {list-style-type: none; margin: 3px; padding: 0.4em; font-size: 1em;border: solid;border-width:thin} 
+
